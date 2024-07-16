@@ -9,22 +9,21 @@ import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.ensure.Ensure;
 
-import static tasks.openBrowserTask.openBrowser;
+import static tasks.OpenBrowserTask.openBrowser;
 
 import static net.serenitybdd.screenplay.actors.OnStage.setTheStage;
 import static pages.simuladorBancarioPage.*;
 
 public class openBrowserStepDefinition {
 
-    @ParameterType(".*")
-    public Actor actor(String actorName) {
-        return OnStage.theActorCalled(actorName);
-    }
-
-    @Before
-    public void setUp() {
-        setTheStage(new OnlineCast());
-    }
+   // @ParameterType(".*")
+   // public Actor actor(String actorName) {
+   //     return OnStage.theActorCalled(actorName);
+   // }
+   // @Before
+   // public void setUp() {
+   //     setTheStage(new OnlineCast());
+   // }
 
     @Given("{actor} opens the browser and navigates to page")
     public void user_opens_the_browser_and_navigates_to_page(Actor actor) {
