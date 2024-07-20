@@ -44,6 +44,7 @@ public class InsertTextIntoBox implements Task{
         
         actor.remember("words_characters", wordsCharacters);
         actor.remember("kwd_data", kwdData);
+        actor.remember("txtValue", txtValue);
     }
     
 

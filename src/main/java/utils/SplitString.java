@@ -18,13 +18,15 @@ public class SplitString {
     }
 
     public static void main(String[] args) {
-        String input = "2 (3%)\nwords\n2 (3%)";
-        List<String> words = splitStringByNewline(input);
+        String input = "esto es un caracter \n\\";
+      
+        System.out.println("the count of characters is: "+ input.length());
+      /*  List<String> words = splitStringByNewline(input);
         
         System.out.println("Words in the string:");
         for (int i = 0; i < words.size(); i++) {
             System.out.println("Position " + i + ": " + words.get(i));
-        }
+        }*/ 
     }
 
 }

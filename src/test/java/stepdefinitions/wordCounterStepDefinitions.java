@@ -2,19 +2,23 @@ package stepdefinitions;
 
 import io.cucumber.java.Before;
 import io.cucumber.java.ParameterType;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
+import net.serenitybdd.screenplay.ensure.Ensure;
+import questions.CharacterCount;
+import questions.MostRepeatedWords;
+import java.util.Map;
+import java.util.List;
+
 import static net.serenitybdd.screenplay.actors.OnStage.setTheStage;
-import static pages.WordCounterPage.COUNTER_DISPLY;
 import static tasks.OpenBrowserTask.openBrowser;
 import static tasks.InsertTextIntoBox.insertTextIntoBox;
-import static utils.SplitString.*;
-import java.util.List;
+
 
 public class wordCounterStepDefinitions {
 
@@ -38,17 +42,32 @@ public class wordCounterStepDefinitions {
         actor.attemptsTo(insertTextIntoBox(txtValue));
     }
 
-    @Then("{actor} can see the count of words and characteres")
-    public void i_can_see_the_count_of_words_and_characteres(Actor actor) {
-        
-        String wordsCharacters = actor.recall("words_characters");
-        String kwdData = actor.recall("kwd_data");
+    @Then("{actor} can see the count of words and characteres for input {string}")
+    public void i_can_see_the_count_of_words_and_characteres(Actor actor, String txtValue) {
 
-        List<String> countWordsCharacters = splitStringBySpace(wordsCharacters);
-        List<String> keywordDensity = splitStringByNewline(kwdData);
+        String wordsCharactersMessage = actor.recall("words_characters");
+        String[] wcCounterDisplay = CharacterCount.splitStringBySpace(wordsCharactersMessage);
+        String[] wordsInTxtValue = CharacterCount.splitStringBySpace(txtValue);
+       
 
-        System.out.println(countWordsCharacters.get(0));
-        System.out.println(keywordDensity.get(0));
+        actor.attemptsTo(
+                Ensure.that(Integer.valueOf(wcCounterDisplay[2])).isEqualTo(txtValue.length()),
+                Ensure.that(Integer.valueOf(wcCounterDisplay[0])).isEqualTo(wordsInTxtValue.length));
+
     }
+
+    @And("{actor} can see the most repeated words with the number of repetitions for input {string}")
+    public void i_can_see_the_most_repeated_words_with_the_number_of_repetitions(Actor actor, String txtValue) {
+
+         List<Map.Entry<String, Long>> topThreeWords = actor.asksFor(MostRepeatedWords.from(txtValue));
+         System.out.println("Top three repeated words:");
+         for (Map.Entry<String, Long> entry : topThreeWords) {
+             System.out.println(entry.getKey() + ": " + entry.getValue());
+         }
+        
+        
+    }
+
+   
 
 }
