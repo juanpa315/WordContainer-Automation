@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class WordRepetitionCounter {
 
-    public static List<Map.Entry<String, Long>> getTopThreeRepeatedWords(String input) {
+    public static List<Map.Entry<String, Long>> getTopRepeatedWords(String input) {
 
         String cleanedInput = input.replaceAll("[^\\p{L}\\p{N}-\\s]", "").toLowerCase();
         
@@ -22,13 +22,4 @@ public class WordRepetitionCounter {
                 .collect(Collectors.toList());
     }
 
-    public static void main(String[] args) {
-        String input = "Prueba Prueba Prueba espejo";
-        List<Map.Entry<String, Long>> topThree = getTopThreeRepeatedWords(input);
-
-        System.out.println("Top three repeated words:");
-        for (Map.Entry<String, Long> entry : topThree) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-    }
 }

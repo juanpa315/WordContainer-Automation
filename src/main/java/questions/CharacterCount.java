@@ -3,6 +3,7 @@ package questions;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
+import utils.SplitString;
 
 
 public class CharacterCount implements Question<String[]>{
@@ -11,8 +12,7 @@ public class CharacterCount implements Question<String[]>{
 
 
      public static String[] splitStringBySpace(String input) {
-        wordsAndCharacteres = (input.split("\\s+"));
-        return wordsAndCharacteres;
+        return SplitString.splitStringBySpace(input);
         
     }
 

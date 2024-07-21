@@ -12,13 +12,14 @@ import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.ensure.Ensure;
 import questions.CharacterCount;
 import questions.MostRepeatedWords;
+import utils.SplitString;
+
 import java.util.Map;
 import java.util.List;
 
 import static net.serenitybdd.screenplay.actors.OnStage.setTheStage;
 import static tasks.OpenBrowserTask.openBrowser;
 import static tasks.InsertTextIntoBox.insertTextIntoBox;
-
 
 public class wordCounterStepDefinitions {
 
@@ -48,26 +49,41 @@ public class wordCounterStepDefinitions {
         String wordsCharactersMessage = actor.recall("words_characters");
         String[] wcCounterDisplay = CharacterCount.splitStringBySpace(wordsCharactersMessage);
         String[] wordsInTxtValue = CharacterCount.splitStringBySpace(txtValue);
-       
 
         actor.attemptsTo(
-                Ensure.that(Integer.valueOf(wcCounterDisplay[2])).isEqualTo(txtValue.length()),
-                Ensure.that(Integer.valueOf(wcCounterDisplay[0])).isEqualTo(wordsInTxtValue.length));
+                Ensure.that(Integer.valueOf(wcCounterDisplay[0])).isEqualTo(wordsInTxtValue.length)
+                        .withReportedError("The website don't display the number of Words correctly."),
+
+                Ensure.that(Integer.valueOf(wcCounterDisplay[2])).isEqualTo(txtValue.length())
+                        .withReportedError("The website don't display the number of characters correctly."));
 
     }
 
     @And("{actor} can see the most repeated words with the number of repetitions for input {string}")
     public void i_can_see_the_most_repeated_words_with_the_number_of_repetitions(Actor actor, String txtValue) {
 
-         List<Map.Entry<String, Long>> topThreeWords = actor.asksFor(MostRepeatedWords.from(txtValue));
-         System.out.println("Top three repeated words:");
-         for (Map.Entry<String, Long> entry : topThreeWords) {
-             System.out.println(entry.getKey() + ": " + entry.getValue());
-         }
-        
-        
-    }
+        List<Map.Entry<String, Long>> topThreeWords = actor.asksFor(MostRepeatedWords.from(txtValue));
+        String kwDensity = actor.recall("kwd_data");
+        List<String> kdDensityWords = SplitString.splitStringByNewline(kwDensity);
 
-   
+        for (int i = 1; i < kdDensityWords.size(); i += 2) {
+            String currentWord = kdDensityWords.get(i);
+            boolean wordFound = false;
+
+            for (Map.Entry<String, Long> entry : topThreeWords) {
+                if (entry.getKey().contains(currentWord)) {
+                    wordFound = true;
+                    break;
+                }
+            }
+
+            actor.attemptsTo(
+                    Ensure.that(wordFound).isTrue()
+                            .orElseThrow(
+                                    new AssertionError("Word '" + currentWord + "' not found in top three words")));
+
+        }
+
+    }
 
 }

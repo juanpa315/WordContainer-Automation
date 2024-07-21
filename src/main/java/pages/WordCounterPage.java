@@ -12,7 +12,7 @@ public class WordCounterPage extends PageObject{
     private WordCounterPage(){}
     
     public static final Target TEXT_BOX = Target.the("Box in order to inser text").located(By.id("box"));
-    public static final Target COUNTER_DISPLY = Target.the("Disply with counter of words and characteres").located(By.xpath("//*[@class='panel-footer']"));
+    public static final Target COUNTER_DISPLY = Target.the("Dispaly with counter of words and characteres").located(By.xpath("//*[@class='panel-footer']"));
     public static final Target KW_DATA_PANEL = Target.the("Keyword density data secction").located(By.id("kwd-accordion-data"));
     public static final Target KWD_PANEL_EMPTY = Target.the("message when kwd pannel is empty").located(By.xpath("//*[@class='message_for_empty_panel' and contains(text(), 'Start ')]"));
 

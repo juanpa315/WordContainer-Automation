@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(features = "src/test/resources/features", 
         glue = "stepdefinitions", 
-        tags = "@Test1",
+        //tags = "@Test1",
         plugin = { "pretty", "html:target/cucumber-reports" }
 )
 public class wordCounterRunner {

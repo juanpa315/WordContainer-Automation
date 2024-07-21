@@ -20,7 +20,7 @@ public class MostRepeatedWords implements Question<List<Map.Entry<String, Long>>
     @Override
     public List<Map.Entry<String, Long>> answeredBy(Actor actor) {
         
-        return WordRepetitionCounter.getTopThreeRepeatedWords(txtValue);
+        return WordRepetitionCounter.getTopRepeatedWords(txtValue);
     }
 
     public static MostRepeatedWords from(String txtValue) {
