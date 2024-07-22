@@ -12,7 +12,7 @@ public class App{
 
     public static List<Map.Entry<String, Long>> counterWodsInAFile(String filePath){
 
-        return WordRepetitionCounter.getTopRepeatedWords(filePath);
+        return WordRepetitionCounter.getWordsFromInput(filePath);
     }
 
     public static int splitInput(String filePath){

@@ -9,11 +9,10 @@ Feature: Validate character and word counter functionality on the Word Counter w
     Then I can see the count of words and characteres for input "<txtValue>"
 
     Examples:
-      | txtValue                                                             |
-      | This is another test                                                 |
-      | pr3.eb4                                                              |
-      | de                                                                   |
-
+      | txtValue             |
+      | This is another test |
+      | pr3.eb4              |
+      | de                   |
 
   @Test2
   Scenario: As a tester I want to insert a text and verify that the system register the most repeated words in a file
@@ -21,5 +20,6 @@ Feature: Validate character and word counter functionality on the Word Counter w
     Then I can see the most repeated words with the number of repetitions for input "<txtValue>"
 
     Examples:
-      | txtValue                                                             |
-      | Texto1 Texto1 Texto1 Texto1 texto2 texto2 texto3 texto3 texto3 texto |
+      | txtValue                                                                               |
+      | Apart from from that that from counting words and characters, our online editor editor |
+      | Texto1 Texto1 Texto1 Texto1 texto2 texto2 texto3 texto3 texto3 texto                   |

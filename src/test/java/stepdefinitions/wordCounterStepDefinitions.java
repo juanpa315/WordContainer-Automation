@@ -2,7 +2,6 @@ package stepdefinitions;
 
 import io.cucumber.java.Before;
 import io.cucumber.java.ParameterType;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,7 +10,7 @@ import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.ensure.Ensure;
 import questions.CharacterCount;
-import questions.MostRepeatedWords;
+import questions.Words;
 import utils.SplitString;
 
 import java.util.Map;
@@ -59,31 +58,34 @@ public class wordCounterStepDefinitions {
 
     }
 
-    @And("{actor} can see the most repeated words with the number of repetitions for input {string}")
+    @Then("{actor} can see the most repeated words with the number of repetitions for input {string}")
     public void i_can_see_the_most_repeated_words_with_the_number_of_repetitions(Actor actor, String txtValue) {
 
-        List<Map.Entry<String, Long>> topThreeWords = actor.asksFor(MostRepeatedWords.from(txtValue));
+        List<Map.Entry<String, Long>> wordsFromTxtValue = actor.asksFor(Words.from(txtValue));
+
         String kwDensity = actor.recall("kwd_data");
         List<String> kdDensityWords = SplitString.splitStringByNewline(kwDensity);
 
-        for (int i = 1; i < kdDensityWords.size(); i += 2) {
-            String currentWord = kdDensityWords.get(i);
+        for (Map.Entry<String, Long> entry : wordsFromTxtValue) {
+            String currentWord = entry.getKey();
             boolean wordFound = false;
 
-            for (Map.Entry<String, Long> entry : topThreeWords) {
-                if (entry.getKey().contains(currentWord)) {
+
+            for (int i = 1; i < kdDensityWords.size(); i += 2) {
+
+                if (kdDensityWords.get(i).contains(currentWord)&& kdDensityWords.get(i-1).contains(entry.getValue().toString())) {
                     wordFound = true;
                     break;
                 }
+
             }
 
             actor.attemptsTo(
                     Ensure.that(wordFound).isTrue()
                             .orElseThrow(
-                                    new AssertionError("Word '" + currentWord + "' not found in top three words")));
+                                    new AssertionError("Word or number of repetitions of '" + currentWord + "' not display correctly in keyword density seciton")));
 
         }
-
     }
 
 }

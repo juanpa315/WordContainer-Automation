@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class WordRepetitionCounter {
 
-    public static List<Map.Entry<String, Long>> getTopRepeatedWords(String input) {
+    public static List<Map.Entry<String, Long>> getWordsFromInput(String input) {
 
         String cleanedInput = input.replaceAll("[^\\p{L}\\p{N}-\\s]", "").toLowerCase();
         
@@ -18,7 +18,7 @@ public class WordRepetitionCounter {
                 ));
 
         return wordCounts.entrySet().stream()
-                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())  
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
                 .collect(Collectors.toList());
     }
 
